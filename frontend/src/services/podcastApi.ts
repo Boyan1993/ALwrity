@@ -1,7 +1,7 @@
-import { ResearchProvider, ResearchConfig } from "./blogWriterApi";
+import { ResearchConfig } from "./blogWriterApi";
+import { ResearchProvider } from "./researchApi";
 import {
   storyWriterApi,
-  StoryScene,
   StorySetupGenerationResponse,
 } from "./storyWriterApi";
 import { getResearchConfig, ResearchPersona } from "../api/researchConfig";
@@ -11,7 +11,6 @@ import {
   CreateProjectResult,
   Fact,
   Knobs,
-  Line,
   PodcastAnalysis,
   PodcastEstimate,
   Query,
@@ -169,27 +168,6 @@ const mapExaResearchResponse = (response: ExaResearchResult): Research => {
     cost: response.cost?.total,
     sourceCount: response.sources?.length || 0,
   };
-};
-
-const splitIntoLines = (text: string, speakers: number): Line[] => {
-  const sentences = text
-    .split(/(?<=[.?!])\s+/)
-    .map((s) => s.trim())
-    .filter((s) => s.length > 4);
-  if (!sentences.length) {
-    return [
-      {
-        id: createId("line"),
-        speaker: "Host",
-        text: text || "Let's dive into today’s topic.",
-      },
-    ];
-  }
-  return sentences.map((sentence, idx) => ({
-    id: createId("line"),
-    speaker: idx % speakers === 0 ? "Host" : `Guest ${((idx % speakers) + 1).toString()}`,
-    text: sentence,
-  }));
 };
 
 // Unused helper functions - kept for reference but not currently used

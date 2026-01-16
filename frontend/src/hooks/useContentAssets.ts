@@ -60,7 +60,7 @@ export const useContentAssets = (filters: AssetFilters = {}) => {
   const isFetchingRef = useRef(false);
   const abortControllerRef = useRef<AbortController | null>(null);
 
-  // Memoize filters to create stable reference - only changes when actual values change
+  // Create stable filters object for memoization
   const stableFilters = useMemo(() => {
     return {
       asset_type: filters.asset_type,
@@ -80,7 +80,7 @@ export const useContentAssets = (filters: AssetFilters = {}) => {
     filters.asset_type,
     filters.source_module,
     filters.search,
-    filters.tags?.join(','),
+    filters.tags,
     filters.favorites_only,
     filters.collection_id,
     filters.date_from,

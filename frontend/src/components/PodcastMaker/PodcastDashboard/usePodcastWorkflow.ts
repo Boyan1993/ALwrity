@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
-import { ResearchProvider, ResearchConfig } from "../../../services/blogWriterApi";
+import { ResearchConfig } from "../../../services/blogWriterApi";
+import { ResearchProvider } from "../../../services/researchApi";
 import { podcastApi } from "../../../services/podcastApi";
 import { usePreflightCheck } from "../../../hooks/usePreflightCheck";
 import { useBudgetTracking } from "../../../hooks/useBudgetTracking";

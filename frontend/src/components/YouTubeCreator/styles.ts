@@ -3,7 +3,7 @@
  * Enterprise-quality styling with improved contrast and readability
  */
 
-import { YT_RED, YT_TEXT } from './constants';
+import { YT_RED } from './constants';
 
 // Enhanced color palette for better contrast
 const BORDER_COLOR = '#d1d5db'; // Lighter gray for better contrast

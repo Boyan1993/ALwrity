@@ -24,7 +24,6 @@ export const CreateVideo: React.FC = () => {
     motion,
     setMotion,
     audioAttached,
-    setAudioAttached,
     selectedModel,
     setSelectedModel,
     selectedExample,

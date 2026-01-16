@@ -9,8 +9,6 @@ import React, { useCallback, useEffect } from 'react';
 import {
   Card,
   CardContent,
-  Stack,
-  Box,
 } from '@mui/material';
 import { Scene } from '../../../services/youtubeApi';
 import { AudioGenerationSettings } from '../../../components/shared/AudioSettingsModal';
@@ -65,25 +63,6 @@ interface SceneCardProps {
   videoPlanIdea?: string; // Video plan idea for context
   language?: string; // Language code for language-aware voice selection
 }
-
-// Helper function to get border color based on scene emphasis
-const getSceneBorderColor = (emphasisTags?: string[]): string => {
-  if (!emphasisTags || emphasisTags.length === 0) return '#e5e7eb'; // Default gray
-
-  const primaryTag = emphasisTags[0];
-  switch (primaryTag) {
-    case 'hook':
-      return '#3b82f6'; // Blue for hook
-    case 'cta':
-      return '#8b5cf6'; // Purple for CTA
-    case 'transition':
-      return '#10b981'; // Green for transition
-    case 'main_content':
-    default:
-      return '#e5e7eb'; // Gray for main content
-  }
-};
-
 
 export const SceneCard: React.FC<SceneCardProps> = React.memo(({
   scene,

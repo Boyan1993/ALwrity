@@ -212,19 +212,19 @@ export const PlanStep: React.FC<PlanStepProps> = React.memo(({
     if (targetAudience && !TARGET_AUDIENCE_OPTIONS.some(opt => opt.value === targetAudience)) {
       setCustomTargetAudience(targetAudience);
     }
-  }, []); // Only on mount
+  }, [targetAudience]); // Only on mount
 
   useEffect(() => {
     if (videoGoal && !VIDEO_GOAL_OPTIONS.some(opt => opt.value === videoGoal)) {
       setCustomVideoGoal(videoGoal);
     }
-  }, []); // Only on mount
+  }, [videoGoal]); // Only on mount
 
   useEffect(() => {
     if (brandStyle && !BRAND_STYLE_OPTIONS.some(opt => opt.value === brandStyle)) {
       setCustomBrandStyle(brandStyle);
     }
-  }, []); // Only on mount
+  }, [brandStyle]); // Only on mount
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

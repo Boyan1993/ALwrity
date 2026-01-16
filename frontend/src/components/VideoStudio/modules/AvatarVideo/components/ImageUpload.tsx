@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import { Box, Button, Typography, Stack } from '@mui/material';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import ImageIcon from '@mui/icons-material/Image';
 
 interface ImageUploadProps {

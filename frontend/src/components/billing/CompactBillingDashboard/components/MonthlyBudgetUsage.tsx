@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Tooltip } from '@mui/material';
+import { Box } from '@mui/material';
 import { AlertTriangle } from 'lucide-react';
 import { TerminalTypography } from '../../../SchedulerDashboard/terminalTheme';
 import { terminalColors } from '../../../SchedulerDashboard/terminalTheme';

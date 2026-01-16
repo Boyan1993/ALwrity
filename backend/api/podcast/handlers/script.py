@@ -62,13 +62,15 @@ async def generate_podcast_script(
             logger.warning(f"Failed to parse research context: {exc}")
             research_context = ""
 
+    research_part = f"RESEARCH CONTEXT:\n{research_context}\n" if research_context else ""
+    
     prompt = f"""You are an expert podcast script planner. Create natural, conversational podcast scenes.
 
 Podcast Idea: "{request.idea}"
 Duration: ~{request.duration_minutes} minutes
 Speakers: {request.speakers} (Host + optional Guest)
 
-{f"RESEARCH CONTEXT:\n{research_context}\n" if research_context else ""}
+{research_part}
 
 Return JSON with:
 - scenes: array of scenes. Each scene has:

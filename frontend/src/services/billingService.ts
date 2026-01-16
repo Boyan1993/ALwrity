@@ -8,7 +8,6 @@ import {
   SubscriptionPlan,
   APIPricing,
   UsageAlert,
-  UsageLog,
   UsageLogsResponse,
   DashboardAPIResponse,
   UsageAPIResponse,
@@ -20,8 +19,6 @@ import {
   ProviderBreakdown,
   UsagePercentages,
   ProviderUsage,
-  ProviderBreakdownSchema,
-  SubscriptionRenewal,
   RenewalHistoryResponse,
   RenewalHistoryAPIResponse,
 } from '../types/billing';
@@ -119,13 +116,6 @@ billingAPI.interceptors.response.use(
 // ------------------------------------------------------------
 // Response coercion helpers to ensure required fields exist
 // ------------------------------------------------------------
-
-const defaultProviderUsage = { calls: 0, tokens: 0, cost: 0 };
-
-const defaultProviderBreakdown = {
-  gemini: { ...defaultProviderUsage },
-  huggingface: { ...defaultProviderUsage },
-};
 
 const defaultLimits = {
   plan_name: 'Unknown Plan',

@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode, useCa
 import { apiClient, setGlobalSubscriptionErrorHandler } from '../api/client';
 import SubscriptionExpiredModal from '../components/SubscriptionExpiredModal';
 import { saveNavigationState, getCurrentPhaseForTool } from '../utils/navigationState';
-import { showSubscriptionExpiredToast, showUsageLimitToast, showSubscriptionToast } from '../utils/toastNotifications';
+import { showSubscriptionExpiredToast, showUsageLimitToast } from '../utils/toastNotifications';
 
 export interface SubscriptionLimits {
   gemini_calls: number;
@@ -56,11 +56,8 @@ export const SubscriptionProvider: React.FC<SubscriptionProviderProps> = ({ chil
   const [error, setError] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [modalErrorData, setModalErrorData] = useState<any>(null);
-  const [lastModalShowTime, setLastModalShowTime] = useState<number>(0);
   const [deferredError, setDeferredError] = useState<any>(null);
   const [lastCheckTime, setLastCheckTime] = useState<number>(0);
-  // New: Grace window after plan changes to avoid noisy UX
-  const [graceUntil, setGraceUntil] = useState<number>(0);
   const [planSignature, setPlanSignature] = useState<string>("");
   // Flag to track if current modal is a usage limit modal (should never be auto-closed)
   const [isUsageLimitModal, setIsUsageLimitModal] = useState<boolean>(false);
@@ -160,19 +157,17 @@ export const SubscriptionProvider: React.FC<SubscriptionProviderProps> = ({ chil
             message: 'To continue using Alwrity and access all features, you need to renew your subscription.'
           });
           setShowModal(true);
-          setLastModalShowTime(Date.now());
           // Also show toast notification with message similar to modal
           showSubscriptionExpiredToast();
         }
       }
 
-      // Detect plan/tier change and start a grace window (5 minutes)
+      // Detect plan/tier change
       try {
         const newSignature = `${subscriptionData?.plan || ''}:${subscriptionData?.tier || ''}`;
         if (newSignature && newSignature !== planSignature) {
-          console.log('SubscriptionContext: Plan change detected, starting grace window');
+          console.log('SubscriptionContext: Plan change detected');
           setPlanSignature(newSignature);
-          setGraceUntil(Date.now() + 5 * 60 * 1000);
           // Close any existing modal as plan just changed
           // BUT: Don't close usage limit modals - they're important even after plan changes
           if (showModal && !isUsageLimitModal) {
@@ -209,7 +204,6 @@ export const SubscriptionProvider: React.FC<SubscriptionProviderProps> = ({ chil
           setShowModal(false);
           setModalErrorData(null);
           setIsUsageLimitModal(false);
-          setLastModalShowTime(0); // Reset the cooldown timer
         }
       }
 
@@ -219,11 +213,9 @@ export const SubscriptionProvider: React.FC<SubscriptionProviderProps> = ({ chil
         const error = deferredError;
         setDeferredError(null); // Clear the deferred error
 
-        // Re-run the error handling logic now that we have subscription data
+        // Re-run error handling logic now that we have subscription data
         const status = error.response?.status;
         if (status === 429 || status === 402) {
-          const now = Date.now();
-
           // If active, suppress modal for usage limits
           if (subscriptionData.active) {
             console.log('SubscriptionContext: Active subscription (deferred); suppressing usage-limit modal');
@@ -234,7 +226,7 @@ export const SubscriptionProvider: React.FC<SubscriptionProviderProps> = ({ chil
           console.log('SubscriptionContext: Showing deferred modal for inactive subscription');
           const errorData = error.response?.data || {};
           
-          // If errorData is an array, extract the first element
+          // If errorData is an array, extract first element
           let processedErrorData = errorData;
           if (Array.isArray(errorData)) {
             processedErrorData = errorData[0] || {};
@@ -253,7 +245,6 @@ export const SubscriptionProvider: React.FC<SubscriptionProviderProps> = ({ chil
             message: modalMessage
           });
           setShowModal(true);
-          setLastModalShowTime(now);
           // Also show toast notification
           showSubscriptionExpiredToast();
         }
@@ -285,7 +276,7 @@ export const SubscriptionProvider: React.FC<SubscriptionProviderProps> = ({ chil
     } finally {
       setLoading(false);
     }
-  }, [lastCheckTime, planSignature, showModal, modalErrorData, lastModalShowTime, graceUntil, isUsageLimitModal]);
+  }, [deferredError, subscription, lastCheckTime, planSignature, showModal, modalErrorData, isUsageLimitModal]);
 
   const refreshSubscription = useCallback(async () => {
     await checkSubscription();
@@ -441,7 +432,6 @@ export const SubscriptionProvider: React.FC<SubscriptionProviderProps> = ({ chil
           setIsUsageLimitModal(true);
           setModalErrorData(modalData);
           setShowModal(true);
-          setLastModalShowTime(now);
           
           // Show toast notification with usage limit message
           const toastMessage = modalData.message || 
@@ -492,7 +482,6 @@ export const SubscriptionProvider: React.FC<SubscriptionProviderProps> = ({ chil
             message: modalMessage
           });
           setShowModal(true);
-          setLastModalShowTime(now);
           // Also show toast notification
           showSubscriptionExpiredToast();
           return true;
@@ -561,7 +550,7 @@ export const SubscriptionProvider: React.FC<SubscriptionProviderProps> = ({ chil
       window.removeEventListener('subscription-updated', handleSubscriptionUpdate);
       window.removeEventListener('user-authenticated', handleUserAuth);
     };
-  }, []); // Remove checkSubscription dependency to prevent loop
+  }, [checkSubscription]);
 
   const value: SubscriptionContextType = {
     subscription,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Stack, Typography, FormControl, InputLabel, Select, MenuItem, Slider } from '@mui/material';
 import type { Resolution, AspectPreset, MotionPreset, Duration } from '../types';
-import { motionPresets, aspectPresets, inputStyles } from '../constants';
+import { motionPresets, inputStyles } from '../constants';
 
 interface VideoSettingsProps {
   resolution: Resolution;

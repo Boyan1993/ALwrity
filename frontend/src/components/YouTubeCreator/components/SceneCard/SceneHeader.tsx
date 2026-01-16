@@ -12,24 +12,6 @@ import {
 import { Edit, HelpOutline } from '@mui/icons-material';
 import { Scene } from '../../../../services/youtubeApi';
 
-// Helper functions
-const getSceneBorderColor = (emphasisTags?: string[]): string => {
-  if (!emphasisTags || emphasisTags.length === 0) return '#e5e7eb'; // Default gray
-
-  const primaryTag = emphasisTags[0];
-  switch (primaryTag) {
-    case 'hook':
-      return '#3b82f6'; // Blue for hook
-    case 'cta':
-      return '#8b5cf6'; // Purple for CTA
-    case 'transition':
-      return '#10b981'; // Green for transition
-    case 'main_content':
-    default:
-      return '#e5e7eb'; // Gray for main content
-  }
-};
-
 const getSceneIcon = (emphasisTag: string) => {
   switch (emphasisTag) {
     case 'hook':

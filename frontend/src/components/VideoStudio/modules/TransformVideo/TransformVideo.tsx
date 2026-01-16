@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Grid, Box, Button, Typography, Stack, CircularProgress, LinearProgress, Alert, Paper } from '@mui/material';
 import { VideoStudioLayout } from '../../VideoStudioLayout';
 import { useTransformVideo } from './hooks/useTransformVideo';
@@ -14,7 +14,6 @@ import {
 import { aiApiClient } from '../../../../api/client';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ErrorIcon from '@mui/icons-material/Error';
 
 const TransformVideo: React.FC = () => {
   const {

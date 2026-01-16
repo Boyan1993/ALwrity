@@ -3,7 +3,8 @@
  * Fetches provider availability and persona-aware defaults
  */
 
-import { ResearchMode, ResearchProvider } from '../services/blogWriterApi';
+import { ResearchMode } from '../services/blogWriterApi';
+import { ResearchProvider } from '../services/researchApi';
 import { apiClient } from './client';
 
 export interface ProviderAvailability {

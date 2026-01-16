@@ -9,7 +9,8 @@ import {
   Job,
   CreateProjectPayload,
 } from '../components/PodcastMaker/types';
-import { BlogResearchResponse, ResearchProvider } from '../services/blogWriterApi';
+import { BlogResearchResponse } from '../services/blogWriterApi';
+import { ResearchProvider } from '../services/researchApi';
 import { podcastApi } from '../services/podcastApi';
 
 export interface PodcastProjectState {

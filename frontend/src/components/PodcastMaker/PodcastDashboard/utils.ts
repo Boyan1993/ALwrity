@@ -1,4 +1,5 @@
-import { ResearchConfig, DateRange } from "../../../services/blogWriterApi";
+import { ResearchConfig } from "../../../services/blogWriterApi";
+import { DateRange } from "../../../services/researchApi";
 import { CreateProjectPayload, Knobs } from "../types";
 
 export const DEFAULT_KNOBS: Knobs = {

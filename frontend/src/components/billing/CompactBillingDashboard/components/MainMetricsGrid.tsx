@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Box, Tooltip, Typography } from '@mui/material';
+import { Grid, Box, Tooltip } from '@mui/material';
 import { motion } from 'framer-motion';
 import { CheckCircle } from 'lucide-react';
 import { TerminalTypography } from '../../../SchedulerDashboard/terminalTheme';

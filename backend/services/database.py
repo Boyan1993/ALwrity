@@ -84,8 +84,13 @@ def init_database():
         ContentAssetBase.metadata.create_all(bind=engine)
         logger.info("Database initialized successfully with all models including subscription system, product marketing, business info, and content assets")
     except SQLAlchemyError as e:
-        logger.error(f"Error initializing database: {str(e)}")
-        raise
+        error_msg = str(e)
+        # Ignore "index already exists" errors
+        if "already exists" in error_msg.lower():
+            logger.warning(f"Database index/table already exists, continuing: {error_msg}")
+        else:
+            logger.error(f"Error initializing database: {error_msg}")
+            raise
 
 def close_database():
     """

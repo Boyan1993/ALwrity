@@ -57,7 +57,8 @@ def markdown_to_html(markdown_content: str) -> str:
                     continue
                 else:
                     in_code_block = False
-                    result.append(f'<pre><code>{"\n".join(code_block_content)}</code></pre>')
+                    newline = "\n"
+                    result.append(f'<pre><code>{newline.join(code_block_content)}</code></pre>')
                     code_block_content = []
                     i += 1
                     continue

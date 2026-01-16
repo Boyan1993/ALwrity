@@ -5,8 +5,6 @@ import {
   Typography,
   Box,
   Grid,
-  Chip,
-  CircularProgress,
   Tooltip as MuiTooltip,
 } from '@mui/material';
 import {
@@ -17,14 +15,12 @@ import {
 import { motion } from 'framer-motion';
 import { 
   LazyLineChart,
-  LazyAreaChart,
   Line, 
   XAxis, 
   YAxis, 
   CartesianGrid, 
   Tooltip as RechartsTooltip, 
   ResponsiveContainer,
-  Area,
   ChartLoadingFallback
 } from '../../utils/lazyRecharts';
 

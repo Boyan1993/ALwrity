@@ -632,6 +632,14 @@ def suggest_prompts(
             visual_summary_parts.append(f"Keywords: {', '.join(visual_data['visual_keywords'][:8])}")
         
         visual_summary = "\n".join(visual_summary_parts) if visual_summary_parts else ""
+        
+        # Build fallback visual data to avoid f-string backslash issues
+        fallback_visual_data = ""
+        if not visual_summary:
+            subheads_text = ", ".join(subheads[:5])
+            key_points_text = ", ".join(key_points[:5])
+            keywords_text = ", ".join([str(k) for k in keywords[:8]])
+            fallback_visual_data = f"Subheadings: {subheads_text}\nKey Points: {key_points_text}\nKeywords: {keywords_text}"
 
         best_practices = (
             "BLOG IMAGE BEST PRACTICES: Create images optimized for blog content, not social media posters. "
@@ -664,6 +672,9 @@ def suggest_prompts(
             "background": "Background images optimized for text overlays. Clean, uncluttered compositions with high-contrast text zones."
         }.get(image_type, "General blog image guidance.")
 
+        # Build negative prompt part separately to avoid f-string backslash issues
+        negative_prompt_part = f", {negative_prompt_additions}" if negative_prompt_additions else ""
+        
         # Build comprehensive prompt with visual data and model-specific guidance
         prompt = f"""
         Provider: {provider}
@@ -672,7 +683,7 @@ def suggest_prompts(
         Title: {title}
         
         VISUAL DATA EXTRACTED FROM CONTENT:
-        {visual_summary if visual_summary else f"Subheadings: {', '.join(subheads[:5])}\nKey Points: {', '.join(key_points[:5])}\nKeywords: {', '.join([str(k) for k in keywords[:8]])}"}
+        {visual_summary if visual_summary else fallback_visual_data}
         
         CONTEXT:
         Audience: {audience}
@@ -712,7 +723,7 @@ def suggest_prompts(
         - Make prompts actionable and clear for the AI model
         
         NEGATIVE PROMPT:
-        Include a suitable negative_prompt that excludes: people posing, social media graphics, posters, text rendered as images, busy compositions, watermarks, logos{f", {negative_prompt_additions}" if negative_prompt_additions else ""}.
+        Include a suitable negative_prompt that excludes: people posing, social media graphics, posters, text rendered as images, busy compositions, watermarks, logos{negative_prompt_part}.
         
         DIMENSIONS:
         Suggest width/height when relevant (e.g., 1024x1024 for square, 1920x1080 for landscape blog headers).

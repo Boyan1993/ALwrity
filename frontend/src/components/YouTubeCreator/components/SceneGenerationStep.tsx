@@ -16,7 +16,7 @@ import {
 import { ArrowForward, ArrowBack, CheckCircle, Warning } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { Scene, VideoPlan } from '../../../services/youtubeApi';
-import { YT_BG, YT_BORDER, YT_TEXT } from '../constants';
+import { YT_BORDER, YT_TEXT } from '../constants';
 import { SceneCard } from './SceneCard';
 import { AssetGenerationCostCard } from './AssetGenerationCostCard';
 import type { AudioGenerationSettings } from '../../shared/AudioSettingsModal';

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Box,
   Container,
@@ -41,8 +41,6 @@ import ComprehensiveAPIBreakdown from './ComprehensiveAPIBreakdown';
 import ToolCostBreakdown from './ToolCostBreakdown';
 import CostOptimizationRecommendations from './CostOptimizationRecommendations';
 import AdvancedCostAnalytics from './AdvancedCostAnalytics';
-import DailyCostHeatmap from './DailyCostHeatmap';
-import LiveCostCounter from './LiveCostCounter';
 import ErrorRateGauge from './ErrorRateGauge';
 import MultiSeriesCostChart from './MultiSeriesCostChart';
 
@@ -70,9 +68,8 @@ const EnhancedBillingDashboard: React.FC<EnhancedBillingDashboardProps> = ({ use
   const [error, setError] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<ViewMode>('compact');
   const [lastRefreshTime, setLastRefreshTime] = useState<Date | null>(null);
-  const [healthError, setHealthError] = useState<string | null>(null);
 
-  const fetchDashboardData = async (showSuccessToast: boolean = false) => {
+  const fetchDashboardData = useCallback(async (showSuccessToast: boolean = false) => {
     try {
       // Use Promise.allSettled to prevent health check timeout from blocking dashboard
       const results = await Promise.allSettled([
@@ -103,13 +100,11 @@ const EnhancedBillingDashboard: React.FC<EnhancedBillingDashboardProps> = ({ use
       // Handle health data (optional - don't block dashboard if it fails)
       if (results[1].status === 'fulfilled') {
         setSystemHealth(results[1].value);
-        setHealthError(null); // Clear health error on success
       } else {
         // Health check failed - keep last successful value, show error toast
         const healthErrorMessage = results[1].reason instanceof Error
           ? results[1].reason.message
           : 'System health check timed out or failed';
-        setHealthError(healthErrorMessage);
         showToastNotification(
           `Unable to fetch latest system health data: ${healthErrorMessage}. Showing last known values.`,
           'warning',
@@ -144,11 +139,11 @@ const EnhancedBillingDashboard: React.FC<EnhancedBillingDashboardProps> = ({ use
     } finally {
       setLoading(false);
     }
-  };
+  }, [systemHealth]);
 
   useEffect(() => {
     fetchDashboardData();
-  }, [userId]);
+  }, [userId, fetchDashboardData]);
 
   // Event-driven refresh: refresh only when non-billing/monitoring APIs complete
   useEffect(() => {
@@ -163,15 +158,8 @@ const EnhancedBillingDashboard: React.FC<EnhancedBillingDashboardProps> = ({ use
           }
           if (results[1].status === 'fulfilled') {
             setSystemHealth(results[1].value);
-            setHealthError(null);
-          } else {
-            // Keep last successful health value, don't set fake defaults
-            const healthErrorMessage = results[1].reason instanceof Error
-              ? results[1].reason.message
-              : 'System health check failed';
-            setHealthError(healthErrorMessage);
-            // Don't update systemHealth - keep last successful value
           }
+          // Keep last successful health value, don't set fake defaults
         })
         .catch(() => {/* ignore */});
     });
@@ -187,7 +175,7 @@ const EnhancedBillingDashboard: React.FC<EnhancedBillingDashboardProps> = ({ use
     };
     document.addEventListener('visibilitychange', onVisible);
     return () => document.removeEventListener('visibilitychange', onVisible);
-  }, []);
+  }, [fetchDashboardData]);
 
   // Listen for billing refresh requests (e.g., when subscription limits are exceeded)
   useEffect(() => {
@@ -214,15 +202,8 @@ const EnhancedBillingDashboard: React.FC<EnhancedBillingDashboardProps> = ({ use
           }
           if (results[1].status === 'fulfilled') {
             setSystemHealth(results[1].value);
-            setHealthError(null);
-          } else {
-            // Keep last successful health value, don't set fake defaults
-            const healthErrorMessage = results[1].reason instanceof Error
-              ? results[1].reason.message
-              : 'System health check failed';
-            setHealthError(healthErrorMessage);
-            // Don't update systemHealth - keep last successful value
           }
+          // Keep last successful health value, don't set fake defaults
         })
         .catch((error) => {
           console.error('Unexpected error in billing refresh:', error);

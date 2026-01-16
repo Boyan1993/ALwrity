@@ -5,7 +5,7 @@
  * Orchestrates scene overview, settings, cost estimation, and render status.
  */
 
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Paper,
   Typography,
@@ -18,7 +18,7 @@ import {
   IconButton,
   Tooltip,
 } from '@mui/material';
-import { PlayArrow, CheckCircle, Warning, ArrowBack, Visibility, Image as ImageIcon, VolumeUp } from '@mui/icons-material';
+import { PlayArrow, CheckCircle, ArrowBack, Visibility, Image as ImageIcon, VolumeUp } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { TaskStatus, CostEstimate, VideoPlan, Scene } from '../../../services/youtubeApi';
 import { YT_BORDER, type Resolution } from '../constants';
@@ -110,7 +110,6 @@ export const RenderStep: React.FC<RenderStepProps> = React.memo(({
     onInfo: (msg) => showSnackbar(msg, 'info'),
   });
 
-  const canStartRender = enabledScenesCount > 0 && !loading;
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}

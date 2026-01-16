@@ -4,7 +4,6 @@ import {
   CardContent,
   Typography,
   Box,
-  LinearProgress,
   Chip,
   IconButton,
   Tooltip,

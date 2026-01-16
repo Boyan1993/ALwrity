@@ -5,7 +5,6 @@ import {
   Typography,
   Box,
   Grid,
-  Chip,
   Tooltip,
   CircularProgress,
   Tabs,
@@ -32,7 +31,6 @@ import {
   CartesianGrid,
   Tooltip as RechartsTooltip,
   ResponsiveContainer,
-  Legend,
   ChartLoadingFallback
 } from '../../utils/lazyRecharts';
 

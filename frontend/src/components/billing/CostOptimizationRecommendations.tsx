@@ -7,7 +7,6 @@ import {
   Grid,
   Chip,
   Tooltip,
-  Button,
   Alert,
   CircularProgress,
   Accordion,
@@ -19,8 +18,6 @@ import { motion } from 'framer-motion';
 import { 
   Lightbulb,
   TrendingDown,
-  DollarSign,
-  ArrowRight,
   Info,
   Sparkles
 } from 'lucide-react';
@@ -103,8 +100,7 @@ const CostOptimizationRecommendations: React.FC<CostOptimizationRecommendationsP
       key.includes('gemini') && key.includes('pro') && !key.includes('flash')
     );
     if (geminiProUsage) {
-      const [_, data] = geminiProUsage;
-      // Estimate Flash cost (typically 10-20x cheaper)
+      const [, data] = geminiProUsage;
       const estimatedFlashCost = data.cost * 0.1; // Conservative estimate
       const savings = data.cost - estimatedFlashCost;
       

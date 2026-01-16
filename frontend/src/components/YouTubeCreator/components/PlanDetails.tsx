@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import { Paper, Typography, Stack, Box, Grid } from '@mui/material';
+import { Paper, Typography, Stack, Grid } from '@mui/material';
 import { VideoPlan } from '../../../services/youtubeApi';
 import { YT_BORDER } from '../constants';
 import { useAvatarBlobUrl } from '../hooks/useAvatarBlobUrl';
@@ -20,16 +20,6 @@ interface PlanDetailsProps {
   onAvatarRegenerate?: () => void;
   regeneratingAvatar?: boolean;
 }
-
-// Typography styles constants
-const SECTION_TITLE_STYLES = {
-  fontWeight: 700,
-  color: '#1a1a1a',
-  mb: 1.5,
-  fontSize: '0.875rem',
-  textTransform: 'uppercase' as const,
-  letterSpacing: '0.05em',
-};
 
 const CONTENT_TEXT_STYLES = {
   color: '#374151',

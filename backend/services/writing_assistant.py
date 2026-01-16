@@ -1,6 +1,6 @@
 import os
 import asyncio
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 from dataclasses import dataclass
 import requests
 from loguru import logger
@@ -37,7 +37,7 @@ class WritingAssistantService:
         self.daily_limit = 50  # Max 50 API calls per day (~$2.50 max cost)
         self.last_reset_date = None
 
-    def _get_cached_suggestion(self, text: str) -> WritingSuggestion | None:
+    def _get_cached_suggestion(self, text: str) -> Optional[WritingSuggestion]:
         """No cached suggestions - always use real API calls for authentic results."""
         return None
 

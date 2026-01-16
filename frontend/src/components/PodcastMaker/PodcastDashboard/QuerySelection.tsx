@@ -18,7 +18,7 @@ import {
   alpha,
 } from "@mui/material";
 import { Search as SearchIcon, AutoAwesome as AutoAwesomeIcon } from "@mui/icons-material";
-import { ResearchProvider } from "../../../services/blogWriterApi";
+import { ResearchProvider } from "../../../services/researchApi";
 import { Query } from "../types";
 import { GlassyCard, glassyCardSx, PrimaryButton } from "../ui";
 

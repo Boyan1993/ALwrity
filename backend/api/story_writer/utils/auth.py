@@ -1,9 +1,9 @@
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 from fastapi import HTTPException, status
 
 
-def require_authenticated_user(current_user: Dict[str, Any] | None) -> str:
+def require_authenticated_user(current_user: Optional[Dict[str, Any]]) -> str:
     """
     Validates the current user dictionary provided by Clerk middleware and
     returns the normalized user_id. Raises HTTP 401 if authentication fails.

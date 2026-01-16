@@ -35,7 +35,6 @@ import FailuresInsights from '../components/SchedulerDashboard/FailuresInsights'
 import SchedulerEventHistory from '../components/SchedulerDashboard/SchedulerEventHistory';
 import SchedulerCharts from '../components/SchedulerDashboard/SchedulerCharts';
 import TaskMonitoringTabs from '../components/SchedulerDashboard/TaskMonitoringTabs';
-import { TerminalTypography, terminalColors } from '../components/SchedulerDashboard/terminalTheme';
 import { useSchedulerTaskAlerts } from '../hooks/useSchedulerTaskAlerts';
 import TasksNeedingIntervention from '../components/SchedulerDashboard/TasksNeedingIntervention';
 import HeaderControls from '../components/shared/HeaderControls';
@@ -198,7 +197,6 @@ const SchedulerDashboard: React.FC = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [autoRefreshInterval, setAutoRefreshInterval] = useState<NodeJS.Timeout | null>(null);
-  const [lastUpdateTimestamp, setLastUpdateTimestamp] = useState<string | null>(null);
   
   // Poll for tasks needing intervention and show toast notifications
   useSchedulerTaskAlerts({
@@ -234,7 +232,6 @@ const SchedulerDashboard: React.FC = () => {
       setDashboardData(data);
       
       setLastUpdated(new Date());
-      setLastUpdateTimestamp(data.stats.last_update || null);
     } catch (err: any) {
       setError(err.message || 'Failed to fetch scheduler dashboard');
       console.error('Error fetching scheduler dashboard:', err);
@@ -251,7 +248,7 @@ const SchedulerDashboard: React.FC = () => {
     if (isLoaded && isSignedIn && !dashboardData) {
       fetchDashboardData();
     }
-  }, [isLoaded, isSignedIn]); // Removed fetchDashboardData to prevent re-renders
+  }, [isLoaded, isSignedIn, dashboardData, fetchDashboardData]);
 
   // Smart auto-refresh: Poll based on scheduler's check interval or next job execution
   useEffect(() => {

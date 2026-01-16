@@ -5,7 +5,7 @@ provider-agnostic `llm_text_gen` dispatcher. Ensures GPT_PROVIDER parity.
 """
 
 import asyncio
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 from utils.logger_utils import get_service_logger
 
 from services.llm_providers.main_text_generation import llm_text_gen
@@ -195,8 +195,8 @@ class BlogSEORecommendationApplier:
         research: Dict[str, Any],
         recommendations: List[Dict[str, Any]],
         persona: Dict[str, Any],
-        tone: str | None,
-        audience: str | None,
+        tone: Optional[str],
+        audience: Optional[str],
     ) -> str:
         """Construct prompt for applying recommendations."""
 

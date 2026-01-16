@@ -42,7 +42,7 @@ export const CarouselPlaceholder: React.FC<CarouselPlaceholderProps> = ({
         clearInterval(intervalRef.current);
       }
     };
-  }, [examples.length, interval, onExampleChange, paused]);
+  }, [examples, examples.length, interval, onExampleChange, paused]);
 
   if (examples.length === 0) return null;
 

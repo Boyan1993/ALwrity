@@ -13,10 +13,8 @@ import {
   MenuItem,
   FormControlLabel,
   Switch,
-  Box,
-  Typography,
 } from '@mui/material';
-import { YT_BORDER, RESOLUTIONS, type Resolution } from '../constants';
+import { RESOLUTIONS, type Resolution } from '../constants';
 
 interface RenderSettingsProps {
   resolution: Resolution;

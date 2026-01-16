@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
-import { useContentAssets, type ContentAsset } from '../../../../../hooks/useContentAssets';
+import { useContentAssets } from '../../../../../hooks/useContentAssets';
 import { getModelInfo } from '../models/videoModels';
 import type { Mode, Duration, Resolution, AspectPreset, MotionPreset } from '../types';
 

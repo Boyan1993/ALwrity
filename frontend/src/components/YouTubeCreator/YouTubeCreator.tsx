@@ -20,8 +20,8 @@ import {
 import { ArrowBack } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { youtubeApi, type VideoPlan, type Scene } from '../../services/youtubeApi';
-import { STEPS, YT_RED, YT_BG, YT_BORDER, YT_TEXT, YOUTUBE_CONTENT_LANGUAGE_OPTIONS, type Resolution, type DurationType, type VideoType, type YouTubeContentLanguage } from './constants';
+import { youtubeApi, type Scene } from '../../services/youtubeApi';
+import { STEPS, YT_RED, YT_BG, YT_BORDER, YT_TEXT, YOUTUBE_CONTENT_LANGUAGE_OPTIONS, type YouTubeContentLanguage } from './constants';
 import { PlanStep } from './components/PlanStep';
 import { ScenesStep } from './components/ScenesStep';
 import { SceneGenerationStep } from './components/SceneGenerationStep';
@@ -75,7 +75,7 @@ const YouTubeCreator: React.FC = () => {
   const [generatingAudioSceneId, setGeneratingAudioSceneId] = useState<number | null>(null);
   
   // Robust polling hook for image generation
-  const { startPolling: startImagePolling, stopPolling: stopImagePolling } = useImageGenerationPolling();
+  const { startPolling: startImagePolling } = useImageGenerationPolling();
 
   // Sync activeStep with persisted state on mount
   useEffect(() => {
@@ -174,7 +174,7 @@ const YouTubeCreator: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  }, [userIdea, durationType, videoType, targetAudience, videoGoal, brandStyle, referenceImage, avatarUrl]);
+  }, [userIdea, durationType, videoType, targetAudience, videoGoal, brandStyle, referenceImage, avatarUrl, updateState]);
 
   const handleAvatarUpload = useCallback(async (file: File) => {
     setUploadingAvatar(true);
