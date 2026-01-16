@@ -10,7 +10,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, Response
 from starlette.middleware.base import BaseHTTPMiddleware
 from loguru import logger
-from typing import Dict, Any
+from typing import Dict, Any, Union
 
 
 class CacheHeadersMiddleware(BaseHTTPMiddleware):
@@ -102,7 +102,7 @@ class FrontendServing:
             logger.error(f"Could not mount static files: {e}")
             return False
     
-    def serve_frontend(self) -> FileResponse | Dict[str, Any]:
+    def serve_frontend(self) -> Union[FileResponse, Dict[str, Any]]:
         """
         Serve the React frontend index.html.
         

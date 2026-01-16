@@ -39,12 +39,12 @@ story_service = StoryWriterService()
 class HDVideoRequest(BaseModel):
     prompt: str
     provider: str = "huggingface"
-    model: str | None = None
-    num_frames: int | None = None
-    guidance_scale: float | None = None
-    num_inference_steps: int | None = None
-    negative_prompt: str | None = None
-    seed: int | None = None
+    model: Optional[str] = None
+    num_frames: Optional[int] = None
+    guidance_scale: Optional[float] = None
+    num_inference_steps: Optional[int] = None
+    negative_prompt: Optional[str] = None
+    seed: Optional[int] = None
 
 
 class HDVideoSceneRequest(BaseModel):
@@ -53,12 +53,12 @@ class HDVideoSceneRequest(BaseModel):
     story_context: Dict[str, Any]
     all_scenes: List[Dict[str, Any]]
     provider: str = "huggingface"
-    model: str | None = None
-    num_frames: int | None = None
-    guidance_scale: float | None = None
-    num_inference_steps: int | None = None
-    negative_prompt: str | None = None
-    seed: int | None = None
+    model: Optional[str] = None
+    num_frames: Optional[int] = None
+    guidance_scale: Optional[float] = None
+    num_inference_steps: Optional[int] = None
+    negative_prompt: Optional[str] = None
+    seed: Optional[int] = None
 
 
 @router.post("/generate-video", response_model=StoryVideoGenerationResponse)

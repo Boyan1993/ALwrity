@@ -2,7 +2,7 @@
 Cache management for subscription API endpoints.
 """
 
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 import time
 import os
 
@@ -14,7 +14,7 @@ _dashboard_cache_ts: Dict[str, float] = {}
 _DASHBOARD_CACHE_TTL_SEC = 600.0
 
 
-def get_cached_dashboard(user_id: str) -> Dict[str, Any] | None:
+def get_cached_dashboard(user_id: str) -> Optional[Dict[str, Any]]:
     """
     Get cached dashboard data if available and not expired.
     
@@ -53,7 +53,7 @@ def set_cached_dashboard(user_id: str, data: Dict[str, Any]) -> None:
     _dashboard_cache_ts[user_id] = time.time()
 
 
-def clear_dashboard_cache(user_id: str | None = None) -> None:
+def clear_dashboard_cache(user_id: Optional[str] = None) -> None:
     """
     Clear dashboard cache for a specific user or all users.
     

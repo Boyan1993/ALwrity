@@ -67,8 +67,8 @@ class SEOApplyRecommendationsRequest(BaseModel):
     research: Dict[str, Any] = Field(default_factory=dict, description="Research data used for the blog")
     recommendations: List[RecommendationItem] = Field(..., description="Actionable recommendations to apply")
     persona: Dict[str, Any] = Field(default_factory=dict, description="Persona settings if available")
-    tone: str | None = Field(default=None, description="Desired tone override")
-    audience: str | None = Field(default=None, description="Target audience override")
+    tone: Optional[str] = Field(default=None, description="Desired tone override")
+    audience: Optional[str] = Field(default=None, description="Target audience override")
 
 
 @router.post("/seo/apply-recommendations")

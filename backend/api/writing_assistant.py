@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from typing import List, Any, Dict
+from typing import List, Any, Dict, Optional, Union
 from loguru import logger
 
 from services.writing_assistant import WritingAssistantService
@@ -11,15 +11,15 @@ router = APIRouter(prefix="/api/writing-assistant", tags=["writing-assistant"])
 
 class SuggestRequest(BaseModel):
     text: str
-    max_results: int | None = 1
+    max_results: Optional[int] = 1
 
 
 class SourceModel(BaseModel):
     title: str
     url: str
-    text: str | None = ""
-    author: str | None = ""
-    published_date: str | None = ""
+    text: Optional[str] = ""
+    author: Optional[str] = ""
+    published_date: Optional[str] = ""
     score: float
 
 

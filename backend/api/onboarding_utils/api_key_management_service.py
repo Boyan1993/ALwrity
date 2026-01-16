@@ -4,7 +4,7 @@ Handles API key operations for onboarding.
 """
 
 import time
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 from fastapi import HTTPException
 from loguru import logger
 
@@ -70,7 +70,7 @@ class APIKeyManagementService:
             logger.error(f"Error getting API keys: {str(e)}")
             raise HTTPException(status_code=500, detail="Internal server error")
     
-    async def get_api_keys_for_onboarding(self, user_id: str | None = None) -> Dict[str, Any]:
+    async def get_api_keys_for_onboarding(self, user_id: Optional[str] = None) -> Dict[str, Any]:
         """Get all configured API keys for onboarding (unmasked), user-aware.
 
         In production, keys are per-user and stored in DB; in local, we use env.
